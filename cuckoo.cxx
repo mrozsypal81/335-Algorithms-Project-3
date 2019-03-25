@@ -106,6 +106,7 @@ bool place_in_hash_tables (char *s) {
       return placed;
     }
     else {
+      // TO DO: WRITE CODE
       // entry at index <pos> in the <index> hash table is not available 
       // so obtain the string stored over there in variable <temp> and place 
       // the string <temp_s> there
@@ -113,11 +114,12 @@ bool place_in_hash_tables (char *s) {
       cout << "String <" << temp_s << "> will be placed at" << " t[" << pos;
       cout <<"][" << index << "]" << " replacing <" << t[pos][index] << ">";
       cout << endl;
-      // YOU NEED TO WRITE THE CODE TO STORE IN temp THE STRING STORED AT
-      // t[pos][index] AND STORE IN t[pos][index] THE STRING temp_s
+      // TO DO: WRITE CODE to store in <temp> the string stored at
+      // t[pos][index] and store in t[pos][index] the string <temp_s>
       strcpy(temp_s, temp);
-      // NOW temp_s CONTAINING THE EVICTED STRING NEEDS TO BE STORED 
-      // IN THE OTHER TABLE
+      // TO DO: WRITE CODE
+      // <temp_s> containing the evicted string needs to be stored in  
+      // the other table
       // WRITE THE CODE TO SET index TO INDICATE THE OTHER TABLE
       // WRITE THE CODE TO CALCULATE IN pos THE HASH VALUE FOR temp_s
       counter ++;
@@ -160,7 +162,7 @@ size_t f(char *s, size_t index) {
     return val;
 }
   else {
-    // TO DO: YOU NEED TO IMPLEMENT THE STEPS TO CALCULATE THE SECOND 
+    // TO DO: WRITE CODE TO IMPLEMENT THE STEPS TO CALCULATE THE SECOND 
     // HASH FUNCTION in <val>
     return val;
  }
