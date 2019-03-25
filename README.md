@@ -1,5 +1,5 @@
-# project-2-starter
-Project -2: decreasing subsequence problem
+# project-3-starter
+Project 3: Cuckoo hashing
 
 Group members:
 
