@@ -1,19 +1,20 @@
 // Assignment 3: Cuckoo Hashing algorithm
 // Doina Bein
 // An open addressing method called Cuckoo Hashing
-// INPUT: an input file containing strings of maximum 255 characters, 
+// INPUT: an input file containing strings of maximum 255 characters,
 // one string per line
-// OUTPUT: a detailed list of where the strings are inserted.     
+// OUTPUT: a detailed list of where the strings are inserted.
 
 #include <iostream>
 #include <cstring>
 #include <stdio.h>
+#include <cmath>
 
 using namespace std;
 
-// cuckoo tables' size                                                        
+// cuckoo tables' size
 const int tablesize = 17;
-// combine the two 1-dimensional table into one 2-dimensional table           
+// combine the two 1-dimensional table into one 2-dimensional table
 char  t[tablesize][2][255];
 
 const int prime = 37;
@@ -42,9 +43,9 @@ int main() {
   char filename[255] = "";
 
    // display the header
-  cout << endl << "CPSC 335-x - Programming Assignment #4: ";
+  cout << endl << "CPSC 335-x - Programming Assignment #3: ";
   cout << "Cuckoo Hashing algorithm" << endl;
-    
+
   // read the strings from a file
   cout << "Input the file name (no spaces)!" << endl;
   cin >> filename;
@@ -73,25 +74,25 @@ int main() {
       perror ( filename ); /* why didn't the file open? */
     }
   return 0;
-  
+
 }
 
 
 bool place_in_hash_tables (char *s) {
-  
+
   bool placed;
   size_t pos;
   int index;
   char temp_s[255], temp[255];
-  
+
   strcpy(temp_s, s);
-  
+
   // use a counter to detect loops; if counter >= 2*tablesize, then loop
   int counter = 0;
-  
+
   // start with table T1
   index = 0;
-  
+
   placed = false;
 
   pos = f(temp_s, index);
@@ -107,8 +108,8 @@ bool place_in_hash_tables (char *s) {
     }
     else {
       // TO DO: WRITE CODE
-      // entry at index <pos> in the <index> hash table is not available 
-      // so obtain the string stored over there in variable <temp> and place 
+      // entry at index <pos> in the <index> hash table is not available
+      // so obtain the string stored over there in variable <temp> and place
       // the string <temp_s> there
       // now the string <temp> needs to be placed in the other table
       cout << "String <" << temp_s << "> will be placed at" << " t[" << pos;
@@ -116,12 +117,20 @@ bool place_in_hash_tables (char *s) {
       cout << endl;
       // TO DO: WRITE CODE to store in <temp> the string stored at
       // t[pos][index] and store in t[pos][index] the string <temp_s>
+      strcpy(temp,t[pos][index]);
+      strcpy(t[pos][index],temp_s);
       strcpy(temp_s, temp);
       // TO DO: WRITE CODE
-      // <temp_s> containing the evicted string needs to be stored in  
+      // <temp_s> containing the evicted string needs to be stored in
       // the other table
       // WRITE THE CODE TO SET index TO INDICATE THE OTHER TABLE
       // WRITE THE CODE TO CALCULATE IN pos THE HASH VALUE FOR temp_s
+      if(index == 0){
+      index = 1;
+      pos = f(temp_s,index);
+    }else{
+      index = 0;
+    }
       counter ++;
     }
   }
@@ -143,27 +152,62 @@ size_t f(char *s, size_t index) {
     val = val % tablesize;
     if (val < 0) val += tablesize;
 
-    if (len == 1) 
+    if (len == 1)
       return val;
-    
-    for (i = 1; i < len; i++) 
+
+    for (i = 1; i < len; i++)
     {
       temp = s[i];
       po *= prime;
 
       po = po % tablesize;
       if (po < 0) po += tablesize;
-      
+
       val += temp * po;
       val = val % tablesize;
 
       if (val < 0) val += tablesize;
-    }    
+    }
     return val;
 }
-  else {
-    // TO DO: WRITE CODE TO IMPLEMENT THE STEPS TO CALCULATE THE SECOND 
-    // HASH FUNCTION in <val>
-    return val;
+  else if (index == 1) {
+      /*po = len-1;
+      po *= prime;
+      po = po % tablesize;
+      if (po < 0) po += tablesize;
+
+      val = s[len-1] * po;
+      //cout << "test "<<  s[len-1] << " test for first character" << endl;
+      val = val % tablesize;
+      if (val < 0) val += tablesize;
+
+      if (len == 1)
+        return val;
+
+      for (i = strlen(s)-2; i > 0; i--)
+      {
+        if(i != 0){
+        temp = s[i];
+        po = po * prime;
+
+        po = po % tablesize;
+        if (po < 0) po += tablesize;
+
+        val = val + ( temp * po);
+      }else{
+        temp = s[i];
+        //emp = temp % tablesize;
+        val = val + temp;
+      }
+        val = val % tablesize;
+
+        if (val < 0) val += tablesize;
+      }
+      return val;*/
+      for (i = strlen(s)-1; i > 0; i--){
+        val = s[i] * pow(prime,i);
+      }
+      val = val % tablesize;
+      if(val < 0) val += tablesize;
+  }
  }
-}
