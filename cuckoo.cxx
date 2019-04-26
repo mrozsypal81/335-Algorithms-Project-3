@@ -174,7 +174,6 @@ size_t f(char *s, size_t index) {
       if (po < 0) po += tablesize;
 
       val = s[0] * po;
-      //cout << "test "<<  s[len-1] << " test for first character" << endl;
       val = val % tablesize;
       if (val < 0) val += tablesize;
       return val;
