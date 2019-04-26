@@ -125,12 +125,8 @@ bool place_in_hash_tables (char *s) {
       // the other table
       // WRITE THE CODE TO SET index TO INDICATE THE OTHER TABLE
       // WRITE THE CODE TO CALCULATE IN pos THE HASH VALUE FOR temp_s
-      if(index == 0){
-      index = 1;
+      index = (index==0)?1:0;
       pos = f(temp_s,index);
-    }else{
-      index = 0;
-    }
       counter ++;
     }
   }
@@ -171,43 +167,35 @@ size_t f(char *s, size_t index) {
     return val;
 }
   else if (index == 1) {
-      /*po = len-1;
-      po *= prime;
+    if(len == 1){
+      po = len-1;
+      po = pow(prime,po);
       po = po % tablesize;
       if (po < 0) po += tablesize;
 
-      val = s[len-1] * po;
+      val = s[0] * po;
       //cout << "test "<<  s[len-1] << " test for first character" << endl;
       val = val % tablesize;
       if (val < 0) val += tablesize;
+      return val;
+    }
 
-      if (len == 1)
-        return val;
-
-      for (i = strlen(s)-2; i > 0; i--)
+      val = s[len -1];
+      val = val % tablesize;
+      if(val < 0) val += tablesize;
+      for (i = 1; i< len; i++)
       {
-        if(i != 0){
-        temp = s[i];
-        po = po * prime;
+        temp = s[len - i - 1];
+        po *= prime;
 
         po = po % tablesize;
         if (po < 0) po += tablesize;
 
-        val = val + ( temp * po);
-      }else{
-        temp = s[i];
-        //emp = temp % tablesize;
-        val = val + temp;
-      }
+        val += temp * po;
         val = val % tablesize;
 
         if (val < 0) val += tablesize;
       }
-      return val;*/
-      for (i = strlen(s)-1; i > 0; i--){
-        val = s[i] * pow(prime,i);
-      }
-      val = val % tablesize;
-      if(val < 0) val += tablesize;
+      return val;
   }
  }
